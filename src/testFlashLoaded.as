@@ -2,7 +2,6 @@ package
 {
 	import flash.display.Loader;
 	import flash.display.Sprite;
-	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
@@ -33,7 +32,7 @@ package
 			Security.allowDomain('*');
 			Security.allowInsecureDomain('*');
 			
-			trace('testFlashLoaded', Security.sandboxType);
+			trace('red', Security.sandboxType);
 			
 			loader = new Loader();
 			
@@ -75,15 +74,15 @@ package
 		
 		private function loadComplete(e:Event):void{
 			
-			trace('testFlashLoaded loadComplete');
-			
+			trace('green loaded');
+
 			loadedSWF = e.currentTarget.content as Sprite;
-			
-			swfName.text = loadedSWF.name;
 			
 			((loadedSWF.getChildByName('green_mc') as Sprite).getChildByName('caption') as TextField).text += ' - red';
 			addChild( loadedSWF );
 			loader = null;
+			
+			this.dispatchEvent(new testEvent('greenLoaded', loadedSWF.name));
 		}
 	}
 }
